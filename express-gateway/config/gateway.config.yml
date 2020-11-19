@@ -1,0 +1,59 @@
+http:
+  port: 8080
+#admin:
+#  port: 9876
+#  host: localhost
+apiEndpoints:
+  cursos:  
+    host: localhost
+    paths: '/cursos/api/v1*'
+  matricula:  
+    host: localhost
+    paths: '/matricula/api/v1*'
+  pagos:  
+    host: localhost
+    paths: '/pagos/api/v1*'
+  alumnos:  
+    host: localhost
+    paths: '/*'
+serviceEndpoints:
+  ordenservice:
+    url: 'http://localhost:3000'
+  atenderservice:
+    url: 'http://localhost:7000'
+  inventarioservice:
+    url: 'http://localhost:5000'
+policies:
+  - basic-auth
+  - cors
+  - expression
+  - key-auth
+  - log
+  - oauth2
+  - proxy
+  - rate-limit
+pipelines:
+  ordenPipeline:
+      apiEndpoints:
+        - orden
+      policies:
+        - proxy:
+            - action:
+                serviceEndpoint: ordenservice
+                changeOrigin: true
+  atenderPipeline:
+      apiEndpoints:
+        - atender
+      policies:
+        - proxy:
+            - action:
+                serviceEndpoint: atenderservice
+                changeOrigin: true
+  inventarioPipeline:
+      apiEndpoints:
+        - inventario
+      policies:
+        - proxy:
+            - action:
+                serviceEndpoint: inventarioservice
+                changeOrigin: true

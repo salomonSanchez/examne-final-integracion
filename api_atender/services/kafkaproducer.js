@@ -7,7 +7,7 @@ producer.on('ready', async function() {
     console.log('Producer is ready')
 })
 
-producer.send([{ topic: 'alumnos', messages: 'started' }], (error, result) => {
+producer.send([{ topic: 'atender', messages: 'started' }], (error, result) => {
     if (error) {
         console.log('error send msg initial:', error)
     }
